@@ -47,9 +47,14 @@ class UserInterface:
         self.window.mainloop()
 
     def get_next_question(self):
-        self.canvas.config(bg="white")
-        q_text = self.quiz.next_question()
-        self.canvas.itemconfig(self.question_text, text=q_text)
+        if self.quiz.still_has_questions():
+            self.canvas.config(bg="white")
+            self.score_label.config(text=f"Score: {self.quiz.score}")
+            q_text = self.quiz.next_question()
+            self.canvas.itemconfig(self.question_text, text=q_text)
+        else:
+            self.canvas.config(bg="orange")
+            self.canvas.itemconfig(self.question_text, text="You have reach the end of quiz, Thank you!")
 
     def true_reply(self):
         self.check_answer(self.quiz.check_answer("True"))
@@ -59,8 +64,6 @@ class UserInterface:
 
     def check_answer(self, is_right):
         if is_right:
-            self.quiz.score += 1
-            self.score_label.config(text=f"Score: {self.quiz.score}")
             self.canvas.config(bg="green")
         else:
             self.canvas.config(bg="red")
