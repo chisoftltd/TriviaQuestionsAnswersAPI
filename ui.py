@@ -55,6 +55,8 @@ class UserInterface:
         else:
             self.canvas.config(bg="orange")
             self.canvas.itemconfig(self.question_text, text="You have reach the end of quiz, Thank you!")
+            self.true_button.config(state="disable")
+            self.false_button.config(state="disable")
 
     def true_reply(self):
         self.check_answer(self.quiz.check_answer("True"))
